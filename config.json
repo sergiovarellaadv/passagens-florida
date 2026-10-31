@@ -1,0 +1,35 @@
+{
+  "origem_principal": "NAT",
+  "origens": [
+    "NAT",
+    "REC",
+    "FOR"
+  ],
+  "destinos": [
+    "MCO",
+    "MIA",
+    "TPA",
+    "FLL"
+  ],
+  "datas": [
+    "2026-12-26",
+    "2026-12-27",
+    "2026-12-28",
+    "2026-12-29",
+    "2026-12-30",
+    "2026-12-31",
+    "2027-01-01"
+  ],
+  "volta": [],
+  "extras_por_rodada": 14,
+  "deslocamento": {
+    "REC": 0,
+    "FOR": 0
+  },
+  "preco_alvo": 3500,
+  "preco_alvo_ida_volta": null,
+  "queda_minima_aviso": 100,
+  "ntfy_topico": "",
+  "aviso_na_tela": false,
+  "mostrar_navegador": false
+}

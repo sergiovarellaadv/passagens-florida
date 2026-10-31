@@ -1,0 +1,4 @@
+perfil-chrome/
+.rodando
+__pycache__/
+*.tmp
