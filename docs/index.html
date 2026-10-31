@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="refresh" content="600">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
+<title>Passagens Natal–Flórida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: painel de embarque — faixa de status no topo, "mais barato agora" em destaque, quadro datas × destinos, detalhe e tendência abaixo. */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --surface-2:#f4f6f9; --ink:#142033; --ink-2:#4a5668; --ink-3:#6f7a8b;
+  --line:#d8dde5; --grid:#e3e7ec; --axis:#c3c9d2;
+  --accent:#f2b200; --accent-ink:#7a5300; --on-accent:#1b1500;
+  --good:#006300; --bad:#b42318; --warn:#8a5a00;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e151f; --surface:#151e2b; --surface-2:#1a2534; --ink:#e8edf3; --ink-2:#a9b4c2; --ink-3:#8390a1;
+  --line:#283446; --grid:#223043; --axis:#36445a;
+  --accent:#ffc72c; --accent-ink:#ffd35c; --on-accent:#1b1500;
+  --good:#3fbf5a; --bad:#ff7a6e; --warn:#ffc72c;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e151f; --surface:#151e2b; --surface-2:#1a2534; --ink:#e8edf3; --ink-2:#a9b4c2; --ink-3:#8390a1;
+  --line:#283446; --grid:#223043; --axis:#36445a;
+  --accent:#ffc72c; --accent-ink:#ffd35c; --on-accent:#1b1500;
+  --good:#3fbf5a; --bad:#ff7a6e; --warn:#ffc72c;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px;display:grid;gap:22px}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:.01em;margin:0;text-wrap:balance;line-height:1.05}
+h1{font-size:clamp(30px,5.2vw,44px)}
+h2{font-size:22px;text-transform:uppercase;letter-spacing:.06em}
+.mono{font-family:var(--f-mono)}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--ink-2)}
+.small{font-size:13px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Cabeçalho */
+.top{display:grid;gap:10px}
+.route{font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--ink-2);text-transform:uppercase}
+.route b{color:var(--ink);font-weight:500}
+.meta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:14px;color:var(--ink-2)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:600;letter-spacing:.02em;border:1px solid var(--line);background:var(--surface)}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.pill.ok{color:var(--good)} .pill.warn{color:var(--warn)} .pill.bad{color:var(--bad)}
+
+/* Destaque */
+.lead{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
+@media (max-width:760px){.lead{grid-template-columns:1fr}}
+.board{background:var(--ink);color:var(--bg);border-radius:10px;padding:20px 22px;display:grid;gap:12px;position:relative;overflow:hidden}
+.board .lbl{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.board .big{font-family:var(--f-display);font-weight:700;font-size:clamp(44px,9vw,68px);line-height:.95;color:var(--accent)}
+.board .where{font-family:var(--f-display);font-weight:600;font-size:26px;line-height:1.1}
+.board .facts{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;opacity:.88}
+.board .facts span{white-space:nowrap}
+.board .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:6px;font:600 14px var(--f-body);text-decoration:none;cursor:pointer;border:1px solid transparent}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.board .btn.ghost{border-color:color-mix(in oklab,var(--bg) 35%,transparent);color:var(--bg)}
+.side{display:grid;gap:10px;align-content:start}
+.mini{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:2px 12px;align-items:baseline}
+.mini .code{font-family:var(--f-display);font-weight:700;font-size:22px;grid-row:span 2;align-self:center;display:flex;align-items:center;gap:8px}
+.mini .code i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.mini .p{font-family:var(--f-display);font-weight:600;font-size:22px;text-align:right}
+.mini .s{font-size:12.5px;color:var(--ink-2)}
+.mini .d{font-size:12.5px;text-align:right}
+
+/* Controles */
+.bar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{font:500 13.5px var(--f-body);color:var(--ink-2);background:transparent;border:0;border-radius:6px;padding:6px 11px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.hint{font-size:13px;color:var(--ink-2);max-width:62ch}
+
+/* Quadro */
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table.grid{width:100%;border-collapse:separate;border-spacing:0;min-width:340px}
+.grid th,.grid td{padding:0;text-align:left}
+.grid thead th{font-family:var(--f-display);font-weight:700;font-size:18px;padding:10px 10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.grid thead th small{display:block;font-family:var(--f-mono);font-weight:400;font-size:11px;color:var(--ink-2);letter-spacing:.06em}
+.grid thead th .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:1px}
+.grid tbody th{padding:8px 10px;border-bottom:1px solid var(--grid);white-space:nowrap;vertical-align:middle}
+.grid tbody th .dw{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.06em;display:block}
+.grid tbody th .dd{font-family:var(--f-display);font-weight:700;font-size:20px}
+.grid tbody tr:last-child th,.grid tbody tr:last-child td{border-bottom:0}
+.grid td{border-bottom:1px solid var(--grid);border-left:1px solid var(--grid)}
+.cell{all:unset;box-sizing:border-box;display:grid;gap:3px;width:100%;min-height:64px;padding:8px 10px;cursor:pointer;position:relative}
+.cell:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.cell .v{font-family:var(--f-display);font-weight:600;font-size:21px;line-height:1}
+.cell .sub{display:flex;flex-wrap:wrap;gap:4px 8px;font-size:11.5px;color:var(--ink-2);line-height:1.3}
+.cell .dl.down{color:var(--good)} .cell .dl.up{color:var(--bad)}
+.chip{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.03em;padding:1px 6px;border-radius:4px;border:1px solid var(--line);color:var(--ink-2);background:var(--surface)}
+.chip.in{border-color:color-mix(in oklab,var(--good) 45%,var(--line));color:var(--good)}
+.chip.chg{border-color:color-mix(in oklab,var(--warn) 50%,var(--line));color:var(--warn)}
+.cell.sel{box-shadow:inset 0 0 0 2px var(--ink)}
+.cell.best::after{content:"menor";position:absolute;top:6px;right:6px;font:600 10px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;background:var(--accent);color:var(--on-accent);padding:1px 5px;border-radius:3px}
+.cell.na .v{color:var(--ink-3);font-size:16px}
+
+/* Detalhe e gráficos */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:14px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:12px;min-width:0;align-content:start}
+.panel header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline}
+dl.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:14px}
+dl.kv dt{color:var(--ink-2)}
+dl.kv dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.chart{position:relative;min-height:200px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.legend i.dash{background:repeating-linear-gradient(90deg,var(--ink-3) 0 4px,transparent 4px 7px)!important}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:6px;padding:7px 9px;font-size:12px;line-height:1.4;white-space:nowrap;transform:translate(-50%,-100%);z-index:2}
+.tip b{font-weight:600}
+.empty{padding:22px;text-align:center;color:var(--ink-2);font-size:14px;border:1px dashed var(--line);border-radius:8px}
+
+/* Registro */
+table.log{width:100%;border-collapse:collapse;font-size:13.5px}
+.log th{font-weight:500;color:var(--ink-2);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.log td{padding:7px 8px;border-bottom:1px solid var(--grid);vertical-align:top}
+.log td.r,.log th.r{text-align:right}
+.notes{font-size:13px;color:var(--ink-2);display:grid;gap:6px;max-width:72ch}
+.notes p{margin:0}
+@media (prefers-reduced-motion:no-preference){.cell{transition:background-color .2s}}
+</style>
+<style>
+.seg button[disabled]{opacity:.4;cursor:not-allowed}
+.seg button small{display:block;font-size:11px;font-weight:400;opacity:.8;line-height:1.2}
+.controls{display:grid;gap:10px}
+.ctlrow{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.ctlrow .lab{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);min-width:62px}
+.cell .age{font-family:var(--f-mono);font-size:10px;color:var(--ink-3)}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="route" id="route"></div>
+    <h1>Passagens Natal–Flórida</h1>
+    <div class="meta" id="meta"><span class="pill warn"><span class="dot"></span>Carregando dados…</span></div>
+  </header>
+
+  <section class="lead" aria-label="Resumo">
+    <div class="board" id="board">
+      <div class="lbl">Mais barato agora</div>
+      <div class="big num">—</div>
+      <div class="where">Aguardando a primeira verificação</div>
+    </div>
+    <div class="side" id="side"></div>
+  </section>
+
+  <section style="display:grid;gap:12px" aria-label="Quadro de preços">
+    <div class="bar"><h2>Datas de ida × destino</h2></div>
+    <div class="controls">
+      <div class="ctlrow"><span class="lab">Saindo de</span><div class="seg" role="group" aria-label="Origem" id="segOrig"></div></div>
+      <div class="ctlrow" id="rowTrip"><span class="lab">Viagem</span><div class="seg" role="group" aria-label="Tipo de viagem" id="segTrip"></div></div>
+      <div class="ctlrow"><span class="lab">Preço</span><div class="seg" role="group" aria-label="Qual preço mostrar" id="segMode">
+        <button type="button" data-mode="conf" aria-pressed="true">Confirmado</button>
+        <button type="button" data-mode="lista" aria-pressed="false">De fora</button>
+        <button type="button" data-mode="auto" aria-pressed="false">Com autotransferência</button>
+      </div></div>
+    </div>
+    <p class="hint" id="hint"></p>
+    <div class="tablebox"><table class="grid" id="grid"></table></div>
+  </section>
+
+  <section class="two">
+    <div class="panel" id="detail"></div>
+    <div class="panel">
+      <header><h2>Menor preço por origem</h2><span class="small muted">só ida, menor entre destinos e datas</span></header>
+      <div class="legend" id="trendLegend"></div>
+      <div class="chart" id="trend"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <header><h2>Verificações</h2><span class="small muted" id="logCount"></span></header>
+    <div style="overflow-x:auto"><table class="log" id="log"></table></div>
+  </section>
+
+  <footer class="notes">
+    <p><b>Como cada preço é lido.</b> Para cada busca, o monitor abre o Google Voos, olha a aba "Melhor opção" (o preço de fora), abre "Menores preços" e espera carregar, depois clica nos voos mais baratos e lê a tela de opções de reserva. Na ida e volta, escolhe também a volta mais barata.</p>
+    <p><b>Confirmado</b> é o valor da tela de reserva, o que você pagaria. Quando a lista mostra um valor que muda ao clicar ("lista mudou"), o quadro usa o confirmado. <b>Com autotransferência</b> inclui bilhetes separados, em que você mesmo despacha a bagagem de novo na conexão.</p>
+    <p>Saídas de Recife e Fortaleza não incluem o trecho a partir de Natal; o valor desse deslocamento entra na comparação se for informado em config.json ("deslocamento"). As buscas extras (outras origens e ida e volta) são feitas em rodízio, então podem ter algumas horas a mais.</p>
+    <p>Valores para 1 adulto, em reais, com taxas, sem bagagem extra.</p>
+  </footer>
+</div>
+
+<script>window.__RUNS__=[{"at": "2026-10-29T14:05:00-03:00", "note": "Primeira rodada, feita manualmente nesta conversa.", "q": {"NAT-MCO_2026-12-26": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "18h 3 min", "fake": null, "listed": 4554, "price": 4554, "self": 4376, "selfAir": "LATAM e Frontier", "seller": "American", "stops": 2, "times": "18:20-10:23"}, "NAT-MCO_2026-12-27": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "18h 3 min", "fake": null, "listed": 4554, "price": 4554, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "18:20-10:23"}, "NAT-MCO_2026-12-28": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "18h 8 min", "fake": null, "listed": 4554, "price": 4554, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "18:15-10:23"}, "NAT-MCO_2026-12-29": {"air": "Azul", "best": 4519, "conf": 1, "dur": "19h 45 min", "fake": null, "listed": 4519, "price": 4519, "self": null, "selfAir": null, "seller": "maxmilhas", "stops": 1, "times": "01:45-19:30"}, "NAT-MCO_2026-12-30": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "18h 8 min", "fake": null, "listed": 4554, "price": 4554, "self": 4205, "selfAir": "LATAM, Arajet e Frontier", "seller": "American", "stops": 2, "times": "18:15-10:23"}, "NAT-MCO_2026-12-31": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "22h 6 min", "fake": null, "listed": 4554, "price": 4554, "self": 4277, "selfAir": "LATAM, Arajet e Frontier", "seller": "American", "stops": 2, "times": "12:40-08:46"}, "NAT-MCO_2027-01-01": {"air": "Azul", "best": 7678, "conf": 1, "dur": "26h 30 min", "fake": null, "listed": 7678, "price": 7678, "self": 6644, "selfAir": "Azul e JetBlue", "seller": "Mytrip", "stops": 1, "times": "19:30-20:00"}, "NAT-MIA_2026-12-26": {"air": "LATAM", "best": 3682, "conf": 1, "dur": "33h 20 min", "fake": null, "listed": 3682, "price": 3682, "self": null, "selfAir": null, "seller": "Booking.com", "stops": 2, "times": "05:10-12:30"}, "NAT-MIA_2026-12-27": {"air": "LATAM", "best": 4457, "conf": 1, "dur": "40h 10 min", "fake": null, "listed": 4457, "price": 4457, "self": null, "selfAir": null, "seller": "Booking.com", "stops": 2, "times": "02:50-17:00"}, "NAT-MIA_2026-12-28": {"air": "Gol e American", "best": 4663, "conf": 1, "dur": "14h 30 min", "fake": null, "listed": 4663, "price": 4663, "self": null, "selfAir": null, "seller": "American", "stops": 1, "times": "18:15-06:45"}, "NAT-MIA_2026-12-29": {"air": "LATAM", "best": 4537, "conf": 1, "dur": "33h 35 min", "fake": null, "listed": 4457, "price": 4457, "self": 3680, "selfAir": "Azul e Surinam Airways", "seller": "Booking.com", "stops": 2, "times": "04:55-12:30"}, "NAT-MIA_2026-12-30": {"air": "LATAM", "best": 5143, "conf": 1, "dur": "28h 35 min", "fake": null, "listed": 5052, "price": 5052, "self": 3797, "selfAir": "Azul e Surinam Airways", "seller": "Booking.com", "stops": 3, "times": "16:10-18:45"}, "NAT-MIA_2026-12-31": {"air": "LATAM", "best": 3785, "conf": 1, "dur": "33h 15 min", "fake": null, "listed": 3682, "price": 3682, "self": null, "selfAir": null, "seller": "Booking.com", "stops": 2, "times": "05:15-12:30"}, "NAT-MIA_2027-01-01": {"air": "Gol", "best": 5818, "conf": 1, "dur": "20h 40 min", "fake": null, "listed": 5818, "price": 5818, "self": null, "selfAir": null, "seller": "Gol", "stops": 2, "times": "21:05-15:45"}, "NAT-TPA_2026-12-26": {"air": "Gol e United", "best": 4336, "conf": 1, "dur": "25h 3 min", "fake": null, "listed": 4336, "price": 4336, "self": null, "selfAir": null, "seller": "United", "stops": 2, "times": "11:30-10:33"}, "NAT-TPA_2026-12-27": {"air": "Gol e American", "best": 4247, "conf": 1, "dur": "17h 55 min", "fake": 4247, "listed": 4683, "price": 4683, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "18:20-10:15"}, "NAT-TPA_2026-12-28": {"air": "Gol e American", "best": 4683, "conf": 1, "dur": "18h", "fake": null, "listed": 4683, "price": 4683, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "18:15-10:15"}, "NAT-TPA_2026-12-29": {"air": "Gol e United", "best": 4247, "conf": 1, "dur": "19h 48 min", "fake": 4247, "listed": 4859, "price": 4859, "self": null, "selfAir": null, "seller": "United", "stops": 2, "times": "16:45-10:33"}, "NAT-TPA_2026-12-30": {"air": "Gol e United", "best": 4252, "conf": 1, "dur": "24h 34 min", "fake": 4252, "listed": 5804, "price": 5804, "self": null, "selfAir": null, "seller": "United", "stops": 2, "times": "12:40-11:14"}, "NAT-TPA_2026-12-31": {"air": "LATAM e Delta", "best": 4247, "conf": 1, "dur": "33h 25 min", "fake": 4247, "listed": 5257, "price": 5257, "self": 4097, "selfAir": "Gol e Avianca", "seller": "Decolar", "stops": 3, "times": "02:50-10:15"}, "NAT-TPA_2027-01-01": {"air": "Gol e Avianca", "best": 3611, "conf": 1, "dur": "21h 10 min", "fake": 3611, "listed": 3611, "price": 8480, "self": null, "selfAir": null, "seller": "Flightnetwork", "stops": 2, "times": "18:15-13:25"}}, "status": "ok", "id": "20261029-1405", "n": 21, "total": 21}, {"at": "2026-10-29T16:43:53-03:00", "note": "", "q": {"NAT-MCO_2026-12-26": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "18h 3 min", "fake": null, "listed": 4554, "price": 4554, "self": 4376, "selfAir": "LATAM e Frontier", "seller": "American", "stops": 2, "times": "18:20-10:23"}, "NAT-MCO_2026-12-27": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "22h 6 min", "fake": null, "listed": 4554, "price": 4554, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "12:40-08:46"}, "NAT-MCO_2026-12-28": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "18h 8 min", "fake": null, "listed": 4554, "price": 4554, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "18:15-10:23"}, "NAT-MCO_2026-12-29": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "18h 8 min", "fake": null, "listed": 4554, "price": 4554, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "18:15-10:23"}, "NAT-MCO_2026-12-30": {"air": "Azul", "best": 4519, "conf": 1, "dur": "17h 15 min", "fake": null, "listed": 4519, "price": 4519, "self": 4205, "selfAir": "LATAM, Arajet e Frontier", "seller": "maxmilhas", "stops": 1, "times": "01:45-17:00"}, "NAT-MCO_2026-12-31": {"air": "Gol e American", "best": 4554, "conf": 1, "dur": "22h 6 min", "fake": null, "listed": 4554, "price": 4554, "self": 4277, "selfAir": "LATAM, Arajet e Frontier", "seller": "American", "stops": 2, "times": "12:40-08:46"}, "NAT-MCO_2027-01-01": {"air": "Azul", "best": 7678, "conf": 1, "dur": "26h 30 min", "fake": null, "listed": 7678, "price": 7678, "self": 6644, "selfAir": "Azul e JetBlue", "seller": "Mytrip", "stops": 1, "times": "19:30-20:00"}, "NAT-MIA_2026-12-26": {"air": "LATAM", "best": 3682, "conf": 1, "dur": "33h 20 min", "fake": null, "listed": 3682, "price": 3682, "self": null, "selfAir": null, "seller": "Booking.com", "stops": 2, "times": "05:10-12:30"}, "NAT-MIA_2026-12-27": {"air": "LATAM", "best": 4457, "conf": 1, "dur": "40h 10 min", "fake": null, "listed": 4457, "price": 4457, "self": null, "selfAir": null, "seller": "Booking.com", "stops": 2, "times": "02:50-17:00"}, "NAT-MIA_2026-12-28": {"air": "Gol e American", "best": 4663, "conf": 1, "dur": "14h 30 min", "fake": null, "listed": 4663, "price": 4663, "self": null, "selfAir": null, "seller": "American", "stops": 1, "times": "18:15-06:45"}, "NAT-MIA_2026-12-29": {"air": "LATAM", "best": 4457, "conf": 1, "dur": "33h 35 min", "fake": null, "listed": 4457, "price": 4457, "self": 3680, "selfAir": "Azul e Surinam Airways", "seller": "Booking.com", "stops": 2, "times": "04:55-12:30"}, "NAT-MIA_2026-12-30": {"air": "LATAM", "best": 5052, "conf": 1, "dur": "28h 35 min", "fake": null, "listed": 5052, "price": 5052, "self": 3760, "selfAir": "Azul e Surinam Airways", "seller": "Booking.com", "stops": 3, "times": "16:10-18:45"}, "NAT-MIA_2026-12-31": {"air": "LATAM", "best": 3682, "conf": 1, "dur": "33h 15 min", "fake": null, "listed": 3682, "price": 3682, "self": null, "selfAir": null, "seller": "Booking.com", "stops": 2, "times": "05:15-12:30"}, "NAT-MIA_2027-01-01": {"air": "Gol", "best": 5818, "conf": 1, "dur": "20h 40 min", "fake": null, "listed": 5818, "price": 5818, "self": null, "selfAir": null, "seller": "Gol", "stops": 2, "times": "21:05-15:45"}, "NAT-TPA_2026-12-26": {"air": "Gol e United", "best": 4336, "conf": 1, "dur": "25h 3 min", "fake": null, "listed": 4336, "price": 4336, "self": null, "selfAir": null, "seller": "United", "stops": 2, "times": "11:30-10:33"}, "NAT-TPA_2026-12-27": {"air": "Gol e American", "best": 4683, "conf": 1, "dur": "17h 55 min", "fake": null, "listed": 4683, "price": 4683, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "18:20-10:15"}, "NAT-TPA_2026-12-28": {"air": "Gol e American", "best": 4683, "conf": 1, "dur": "18h", "fake": null, "listed": 4683, "price": 4683, "self": null, "selfAir": null, "seller": "American", "stops": 2, "times": "18:15-10:15"}, "NAT-TPA_2026-12-29": {"air": "Gol e United", "best": 4247, "conf": 1, "dur": "19h 48 min", "fake": 4247, "listed": 4859, "price": 4859, "self": null, "selfAir": null, "seller": "United", "stops": 2, "times": "16:45-10:33"}, "NAT-TPA_2026-12-30": {"air": "Gol e United", "best": 4252, "conf": 1, "dur": "24h 34 min", "fake": 4252, "listed": 5804, "price": 5804, "self": null, "selfAir": null, "seller": "United", "stops": 2, "times": "12:40-11:14"}, "NAT-TPA_2026-12-31": {"air": "LATAM e Delta", "best": 4247, "conf": 1, "dur": "33h 25 min", "fake": 4247, "listed": 5257, "price": 5257, "self": 4102, "selfAir": "Gol e Avianca", "seller": "Decolar", "stops": 3, "times": "02:50-10:15"}, "NAT-TPA_2027-01-01": {"air": "Gol e Avianca", "best": 3611, "conf": 1, "dur": "21h 10 min", "fake": 3611, "listed": 3611, "price": 8606, "self": null, "selfAir": null, "seller": "Expedia", "stops": 2, "times": "18:15-13:25"}}, "status": "ok", "id": "20261029-1643", "n": 21, "total": 21}, {"id": "20261031-1838", "at": "2026-10-31T18:38:34-03:00", "status": "ok", "note": "", "n": 42, "total": 42, "q": {"NAT-MCO_2026-12-26": {"price": 5960, "conf": 1, "best": 4159, "listed": 5960, "fake": null, "self": null, "selfAir": null, "air": "Gol e United", "stops": 2, "times": "11:30-10:40", "dur": "25h 10 min", "seller": "United"}, "NAT-MCO_2026-12-27": {"price": 4620, "conf": 1, "best": 4159, "listed": 4620, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:40-08:46", "dur": "22h 6 min", "seller": "American"}, "NAT-MCO_2026-12-28": {"price": 4620, "conf": 1, "best": 4159, "listed": 4620, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:40-08:46", "dur": "22h 6 min", "seller": "American"}, "NAT-MCO_2026-12-29": {"price": 4620, "conf": 1, "best": 4159, "listed": 4620, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:40-08:46", "dur": "22h 6 min", "seller": "American"}, "NAT-MCO_2026-12-30": {"price": 4620, "conf": 1, "best": 4159, "listed": 4620, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:40-08:46", "dur": "22h 6 min", "seller": "American"}, "NAT-MCO_2026-12-31": {"price": 4620, "conf": 1, "best": 4620, "listed": 4620, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:40-08:46", "dur": "22h 6 min", "seller": "American"}, "NAT-MCO_2027-01-01": {"price": 9154, "conf": 1, "best": 9154, "listed": 9154, "fake": null, "self": null, "selfAir": null, "air": "LATAM", "stops": 1, "times": "03:00-15:15", "dur": "14h 15 min", "seller": "LATAM"}, "NAT-MIA_2026-12-26": {"price": 4129, "conf": 1, "best": 4129, "listed": 4129, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "18:20-06:45", "dur": "14h 25 min", "seller": "American"}, "NAT-MIA_2026-12-27": {"price": 4129, "conf": 1, "best": 4129, "listed": 4129, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "18:20-06:45", "dur": "14h 25 min", "seller": "American"}, "NAT-MIA_2026-12-28": {"price": 4004, "conf": 1, "best": 4004, "listed": 4004, "fake": null, "self": null, "selfAir": null, "air": "LATAM", "stops": 2, "times": "04:55-14:30", "dur": "35h 35 min", "seller": "Delta"}, "NAT-MIA_2026-12-29": {"price": 4129, "conf": 1, "best": 4129, "listed": 4129, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "18:15-06:45", "dur": "14h 30 min", "seller": "American"}, "NAT-MIA_2026-12-30": {"price": 4129, "conf": 1, "best": 4129, "listed": 4129, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "18:15-06:45", "dur": "14h 30 min", "seller": "American"}, "NAT-MIA_2026-12-31": {"price": 4400, "conf": 1, "best": 4400, "listed": 4400, "fake": null, "self": null, "selfAir": null, "air": "LATAM", "stops": 2, "times": "04:55-06:10", "dur": "27h 15 min", "seller": "Delta"}, "NAT-MIA_2027-01-01": {"price": 5820, "conf": 1, "best": 5820, "listed": 5820, "fake": null, "self": null, "selfAir": null, "air": "LATAM", "stops": 1, "times": "03:00-16:40", "dur": "15h 40 min", "seller": "LATAM"}, "NAT-TPA_2026-12-26": {"price": 4062, "conf": 1, "best": 4062, "listed": 4062, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "18:20-10:15", "dur": "17h 55 min", "seller": "American"}, "NAT-TPA_2026-12-27": {"price": 4062, "conf": 1, "best": 4062, "listed": 4062, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "18:20-10:15", "dur": "17h 55 min", "seller": "American"}, "NAT-TPA_2026-12-28": {"price": 5884, "conf": 1, "best": 4062, "listed": 5884, "fake": null, "self": null, "selfAir": null, "air": "Gol e United", "stops": 2, "times": "11:30-10:33", "dur": "25h 3 min", "seller": "United"}, "NAT-TPA_2026-12-29": {"price": 4930, "conf": 1, "best": 4062, "listed": 4930, "fake": null, "self": null, "selfAir": null, "air": "Gol e United", "stops": 2, "times": "16:45-10:33", "dur": "19h 48 min", "seller": "United"}, "NAT-TPA_2026-12-30": {"price": 4313, "conf": 0, "best": 4313, "listed": 4313, "fake": null, "self": null, "selfAir": null, "air": "Gol e Avianca", "stops": 2, "times": "18:15-13:25", "dur": "21h 10 min", "seller": null}, "NAT-TPA_2026-12-31": {"price": 5884, "conf": 1, "best": 4308, "listed": 5884, "fake": null, "self": null, "selfAir": null, "air": "Gol e United", "stops": 2, "times": "16:45-10:33", "dur": "19h 48 min", "seller": "United"}, "NAT-TPA_2027-01-01": {"price": 3663, "conf": 0, "best": 3663, "listed": 3663, "fake": null, "self": null, "selfAir": null, "air": "Gol e Avianca", "stops": 2, "times": "18:15-13:25", "dur": "21h 10 min", "seller": null}, "NAT-FLL_2026-12-26": {"price": 5016, "conf": 1, "best": 5016, "listed": 5016, "fake": null, "self": null, "selfAir": null, "air": "LATAM e Delta", "stops": 2, "times": "11:10-14:30", "dur": "29h 20 min", "seller": "Delta"}, "NAT-FLL_2026-12-27": {"price": 5542, "conf": 1, "best": 5542, "listed": 5542, "fake": null, "self": null, "selfAir": null, "air": "LATAM e Delta", "stops": 2, "times": "11:15-14:30", "dur": "29h 15 min", "seller": "Delta"}, "NAT-FLL_2026-12-28": {"price": 5542, "conf": 1, "best": 5542, "listed": 5542, "fake": null, "self": null, "selfAir": null, "air": "LATAM e Delta", "stops": 2, "times": "14:05-14:30", "dur": "26h 25 min", "seller": "Delta"}, "NAT-FLL_2026-12-29": {"price": 5016, "conf": 1, "best": 5016, "listed": 5016, "fake": null, "self": null, "selfAir": null, "air": "LATAM e Delta", "stops": 2, "times": "11:10-14:30", "dur": "29h 20 min", "seller": "Delta"}, "NAT-FLL_2026-12-30": {"price": 5542, "conf": 1, "best": 5542, "listed": 5542, "fake": null, "self": null, "selfAir": null, "air": "LATAM e Delta", "stops": 2, "times": "11:10-14:30", "dur": "29h 20 min", "seller": "Delta"}, "NAT-FLL_2026-12-31": {"price": 5016, "conf": 1, "best": 5016, "listed": 5016, "fake": null, "self": null, "selfAir": null, "air": "LATAM e Delta", "stops": 2, "times": "14:05-14:50", "dur": "26h 45 min", "seller": "Delta"}, "NAT-FLL_2027-01-01": {"price": 6431, "conf": 1, "best": 6431, "listed": 6431, "fake": null, "self": null, "selfAir": null, "air": "LATAM e Delta", "stops": 2, "times": "03:00-14:50", "dur": "37h 50 min", "seller": "Delta"}, "REC-MCO_2026-12-26": {"price": 3998, "conf": 1, "best": 3998, "listed": 3998, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:45-08:46", "dur": "22h 1 min", "seller": "American"}, "REC-MCO_2026-12-27": {"price": 3998, "conf": 1, "best": 3998, "listed": 3998, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:55-08:46", "dur": "21h 51 min", "seller": "American"}, "REC-MCO_2026-12-28": {"price": 3998, "conf": 1, "best": 3998, "listed": 3998, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:55-08:46", "dur": "21h 51 min", "seller": "American"}, "REC-MCO_2026-12-29": {"price": 3998, "conf": 1, "best": 3998, "listed": 3998, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:55-08:46", "dur": "21h 51 min", "seller": "American"}, "REC-MCO_2026-12-30": {"price": 3998, "conf": 1, "best": 3998, "listed": 3998, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "10:15-08:46", "dur": "24h 31 min", "seller": "American"}, "REC-MCO_2026-12-31": {"price": 3998, "conf": 1, "best": 3998, "listed": 3998, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 2, "times": "12:55-08:46", "dur": "21h 51 min", "seller": "American"}, "REC-MCO_2027-01-01": {"price": 6854, "conf": 1, "best": 6854, "listed": 6854, "fake": null, "self": null, "selfAir": null, "air": "Azul", "stops": 1, "times": "03:25-17:00", "dur": "15h 35 min", "seller": "Azul"}, "REC-MIA_2026-12-26": {"price": 4705, "conf": 1, "best": 4705, "listed": 4705, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "17:10-05:15", "dur": "14h 5 min", "seller": "American"}, "REC-MIA_2026-12-27": {"price": 4060, "conf": 1, "best": 4060, "listed": 4060, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "17:10-05:55", "dur": "14h 45 min", "seller": "American"}, "REC-MIA_2026-12-28": {"price": 4705, "conf": 1, "best": 4705, "listed": 4705, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "17:10-05:15", "dur": "14h 5 min", "seller": "American"}, "REC-MIA_2026-12-29": {"price": 4060, "conf": 1, "best": 4060, "listed": 4060, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "17:10-05:15", "dur": "14h 5 min", "seller": "American"}, "REC-MIA_2026-12-30": {"price": 4705, "conf": 1, "best": 4705, "listed": 4705, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "17:10-05:15", "dur": "14h 5 min", "seller": "American"}, "REC-MIA_2026-12-31": {"price": 4521, "conf": 1, "best": 4521, "listed": 4521, "fake": null, "self": null, "selfAir": null, "air": "Gol e American", "stops": 1, "times": "12:55-06:45", "dur": "19h 50 min", "seller": "American"}, "REC-MIA_2027-01-01": {"price": 5637, "conf": 1, "best": 5637, "listed": 5637, "fake": null, "self": null, "selfAir": null, "air": "LATAM", "stops": 1, "times": "02:25-16:40", "dur": "16h 15 min", "seller": "LATAM"}}}];window.__CFG__={"origem_principal": "NAT", "origens": ["NAT", "REC", "FOR"], "destinos": ["MCO", "MIA", "TPA", "FLL"], "datas": ["2026-12-26", "2026-12-27", "2026-12-28", "2026-12-29", "2026-12-30", "2026-12-31", "2027-01-01"], "volta": [], "deslocamento": {"REC": 0, "FOR": 0}, "preco_alvo": 3500, "preco_alvo_ida_volta": null, "cidades": {"NAT": "Natal", "REC": "Recife", "FOR": "Fortaleza", "MCO": "Orlando", "MIA": "Miami", "TPA": "Tampa", "FLL": "Fort Lauderdale"}};</script>
+<script>
+(function(){
+const CFG=Object.assign({origem_principal:'NAT',origens:['NAT'],destinos:['MCO','MIA','TPA'],datas:['2026-12-26','2026-12-27','2026-12-28','2026-12-29','2026-12-30','2026-12-31','2027-01-01'],volta:[],deslocamento:{},preco_alvo:null,preco_alvo_ida_volta:null},window.__CFG__||{});
+const CID=Object.assign({NAT:'Natal',REC:'Recife',FOR:'Fortaleza',MCO:'Orlando',MIA:'Miami',TPA:'Tampa',FLL:'Fort Lauderdale'},CFG.cidades||{});
+const ORIGS=CFG.origens, DESTS=CFG.destinos, DATES=CFG.datas, VOLTAS=(CFG.volta||[]).slice().sort();
+const OCOL=['--s1','--s2','--s3'];
+const TZ='America/Fortaleza';
+const HINTS={
+  conf:'Valor da tela final de reserva do voo regular mais barato. O selo verde mostra quando saiu mais barato do que o preço de fora.',
+  lista:'O menor valor da aba "Melhor opção", que aparece antes de abrir os resultados. Serve para comparar com o que aparece por dentro.',
+  auto:'O menor valor da aba "Menores preços", incluindo bilhetes separados com autotransferência. Mais barato, mas com mais risco na conexão.'
+};
+let runs=[],mode='conf',orig=CFG.origem_principal,trip='',sel=null;
+try{const m=localStorage.getItem('pnf-mode');if(m&&HINTS[m])mode=m;const o=localStorage.getItem('pnf-orig');if(o&&ORIGS.includes(o))orig=o;const t=localStorage.getItem('pnf-trip');if(t===''||VOLTAS.includes(t))trip=t||''}catch(e){}
+
+const $=id=>document.getElementById(id);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const brl=n=>n==null||isNaN(n)?'—':'R$ '+Math.round(n).toLocaleString('pt-BR');
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dParts=d=>{const t=new Date(d+'T12:00:00Z');return{w:t.toLocaleDateString('pt-BR',{weekday:'short',timeZone:'UTC'}).replace('.',''),dm:t.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',timeZone:'UTC'})}};
+const dLong=d=>{const p=dParts(d);return p.w+' '+p.dm};
+const tFmt=iso=>new Date(iso).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',timeZone:TZ});
+const migr=k=>/^[A-Z]{3}_\d{4}-\d\d-\d\d$/.test(k)?'NAT-'+k:k;
+const key=(o,d,dt,v)=>o+'-'+d+'_'+dt+(v?'_'+v:'');
+const parts=k=>{const [r,ida,volta]=k.split('_');const [o,d]=r.split('-');return{o,d,ida,volta:volta||null}};
+const desl=o=>+(CFG.deslocamento&&CFG.deslocamento[o])||0;
+const gfUrl=(o,d,ida,v)=>'https://www.google.com/travel/flights?q='+encodeURIComponent('Flights to '+d+' from '+o+' on '+ida+(v?' through '+v:' oneway'))+'&hl=pt-BR&curr=BRL&gl=BR';
+const desc=k=>{const p=parts(k);return CID[p.o]+' → '+CID[p.d]+' · '+dLong(p.ida)+(p.volta?' (volta '+dParts(p.volta).dm+')':'')};
+
+function val(q,m){
+  if(!q||q.err)return null;
+  if(m==='lista')return q.best??null;
+  if(m==='auto'){const a=[q.self,q.price].filter(v=>v!=null);return a.length?Math.min(...a):null}
+  return q.price??null;
+}
+function latestFor(k){for(let i=runs.length-1;i>=0;i--){const q=runs[i].q&&runs[i].q[k];if(q&&!q.err)return{q,i,at:runs[i].at}}return null}
+function prevFor(k,before){for(let i=before-1;i>=0;i--){const q=runs[i].q&&runs[i].q[k];if(q&&!q.err)return q}return null}
+function minFor(o,t,m){let best=null;DESTS.forEach(d=>DATES.forEach(dt=>{if(t&&t<=dt)return;const k=key(o,d,dt,t),L=latestFor(k);if(!L)return;const v=val(L.q,m);if(v!=null&&(!best||v<best.v))best={v,k,q:L.q,at:L.at}}));return best}
+
+function renderRoute(){
+  $('route').innerHTML=ORIGS.map(o=>'<b>'+o+'</b>').join(' · ')+' → '+DESTS.map(d=>'<b>'+d+'</b>').join(' · ')+' &nbsp;·&nbsp; 1 adulto · econômica';
+}
+function renderMeta(){
+  const el=$('meta');
+  if(!runs.length){el.innerHTML='<span class="pill warn"><span class="dot"></span>Nenhuma verificação gravada ainda</span><span>A primeira aparece aqui quando o monitor rodar.</span>';return}
+  const last=runs[runs.length-1];
+  const ageH=(Date.now()-new Date(last.at).getTime())/36e5;
+  let cls='ok',txt='Funcionando';
+  if(last.status==='bloqueado'){cls='bad';txt='Google pediu verificação'}
+  else if(last.status==='parcial'){cls='warn';txt='Última rodada incompleta'}
+  if(ageH>5){cls='warn';txt='Sem verificação há '+Math.round(ageH)+' h'}
+  const n=last.n??Object.values(last.q||{}).filter(q=>!q.err).length, tot=last.total??Object.keys(last.q||{}).length;
+  el.innerHTML='<span class="pill '+cls+'"><span class="dot"></span>'+esc(txt)+'</span>'+
+    '<span class="num">Última verificação: <b>'+esc(tFmt(last.at))+'</b></span>'+
+    '<span class="num">'+n+' de '+tot+' buscas</span>'+
+    '<span class="num">'+runs.length+(runs.length===1?' verificação':' verificações')+' · a cada 2 h no GitHub</span>';
+}
+function renderBoard(){
+  let best=null;
+  ORIGS.forEach(o=>{const c=minFor(o,'','conf');if(c){const ef=c.v+desl(o);if(!best||ef<best.ef)best=Object.assign(c,{ef,o})}});
+  if(!best)return;
+  const p=parts(best.k),q=best.q;
+  const facts=[q.air,q.stops!=null?(q.stops===0?'direto':q.stops+(q.stops===1?' parada':' paradas')):null,q.times?q.times.replace('-',' → '):null,q.dur,q.seller?'vendido por '+q.seller:null].filter(Boolean);
+  const dsl=desl(best.o);
+  let extra=best.o!==CFG.origem_principal?('Saindo de '+CID[best.o]+(dsl?' · + '+brl(dsl)+' para ir de Natal até lá = '+brl(best.ef):' · não inclui ir de Natal até lá')):'';
+  let alvo='';
+  if(CFG.preco_alvo){alvo=best.ef<=CFG.preco_alvo?'Abaixo do seu preço-alvo de '+brl(CFG.preco_alvo)+'.':'Seu preço-alvo: '+brl(CFG.preco_alvo)+' (faltam '+brl(best.ef-CFG.preco_alvo)+').'}
+  $('board').innerHTML='<div class="lbl">Mais barato agora · só ida · confirmado na reserva</div>'+
+    '<div class="big num">'+brl(best.v)+'</div>'+
+    '<div class="where">'+esc(CID[p.o])+' → '+esc(CID[p.d])+' <span class="mono" style="font-size:18px;opacity:.75">'+p.o+'–'+p.d+'</span> · '+esc(dLong(p.ida))+'</div>'+
+    '<div class="facts">'+facts.map(f=>'<span>'+esc(f)+'</span>').join('')+'</div>'+
+    (extra?'<div class="facts small">'+esc(extra)+'</div>':'')+
+    (alvo?'<div class="facts small">'+esc(alvo)+'</div>':'')+
+    '<div class="row"><a class="btn primary" href="'+gfUrl(p.o,p.d,p.ida)+'" target="_blank" rel="noopener">Abrir no Google Voos</a>'+
+    '<button type="button" class="btn ghost" id="seeBest">Ver detalhes</button></div>';
+  $('seeBest').onclick=()=>{orig=best.o;trip='';select(best.k);$('detail').scrollIntoView({behavior:'smooth',block:'start'})};
+}
+function renderControls(){
+  $('segOrig').innerHTML=ORIGS.map(o=>{const m=minFor(o,'',mode);const dis=trip&&o!==CFG.origem_principal;return '<button type="button" data-o="'+o+'" aria-pressed="'+(o===orig)+'"'+(dis?' disabled':'')+'>'+esc(CID[o])+'<small class="num">'+(m?brl(m.v):'sem dados')+(desl(o)&&m?' + '+brl(desl(o)):'')+'</small></button>'}).join('');
+  $('segOrig').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(b.disabled)return;orig=b.dataset.o;save();sel=null;renderControls();renderSide();renderGrid();renderDetail()});
+  if(!VOLTAS.length){$('rowTrip').hidden=true}else{
+    $('rowTrip').hidden=false;
+    $('segTrip').innerHTML='<button type="button" data-t="" aria-pressed="'+(trip==='')+'">Só ida</button>'+VOLTAS.map(v=>{const m=minFor(CFG.origem_principal,v,mode);return '<button type="button" data-t="'+v+'" aria-pressed="'+(trip===v)+'">Ida e volta · volta '+esc(dParts(v).dm)+'<small class="num">'+(m?brl(m.v):'sem dados')+'</small></button>'}).join('');
+    $('segTrip').querySelectorAll('button').forEach(b=>b.onclick=()=>{trip=b.dataset.t;if(trip)orig=CFG.origem_principal;save();sel=null;renderControls();renderSide();renderGrid();renderDetail()});
+  }
+  document.querySelectorAll('#segMode button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===mode?'true':'false'));
+  $('hint').textContent=HINTS[mode]+(trip?' Na ida e volta, o valor é o total dos dois trechos.':'')+(orig!==CFG.origem_principal?' Saindo de '+CID[orig]+': não inclui ir de Natal até lá.':'');
+}
+function save(){try{localStorage.setItem('pnf-mode',mode);localStorage.setItem('pnf-orig',orig);localStorage.setItem('pnf-trip',trip)}catch(e){}}
+
+function renderSide(){
+  $('side').innerHTML=DESTS.map(d=>{
+    let best=null;
+    DATES.forEach(dt=>{if(trip&&trip<=dt)return;const L=latestFor(key(orig,d,dt,trip));if(!L)return;const v=val(L.q,mode);if(v!=null&&(!best||v<best.v))best={v,dt}});
+    return '<div class="mini"><div class="code">'+d+'</div>'+
+      '<div class="s">'+esc(CID[d])+' · de '+esc(CID[orig])+'</div><div class="p num">'+(best?brl(best.v):'—')+'</div>'+
+      '<div class="s">'+(best?'melhor dia: '+esc(dLong(best.dt)):'sem dados ainda')+'</div><div class="d"></div></div>';
+  }).join('');
+}
+
+function renderGrid(){
+  const vals=[],cells={};
+  DESTS.forEach(d=>DATES.forEach(dt=>{const k=key(orig,d,dt,trip),L=(trip&&trip<=dt)?null:latestFor(k);const v=L?val(L.q,mode):null;cells[k]={L,v};if(v!=null)vals.push(v)}));
+  const mn=vals.length?Math.min(...vals):0;
+  const lastAt=runs.length?new Date(runs[runs.length-1].at).getTime():0;
+  let h='<thead><tr><th scope="col"><small>IDA</small>Data</th>'+DESTS.map(d=>'<th scope="col"><small>'+esc(CID[d].toUpperCase())+'</small>'+d+'</th>').join('')+'</tr></thead><tbody>';
+  DATES.forEach(dt=>{
+    const p=dParts(dt);
+    h+='<tr><th scope="row"><span class="dw">'+esc(p.w)+'</span><span class="dd num">'+esc(p.dm)+'</span></th>';
+    DESTS.forEach(d=>{
+      const k=key(orig,d,dt,trip),{L,v}=cells[k];
+      if(v==null){h+='<td><button type="button" class="cell na" data-k="'+k+'" aria-label="'+esc(desc(k)+': sem dados')+'"><span class="v">'+(trip&&trip<=dt?'—':'sem dados')+'</span></button></td>';return}
+      const q=L.q,pv=val(prevFor(k,L.i),mode);
+      const t=Math.min(1,(v-mn)/Math.max(1,mn*0.4));
+      const pct=Math.round(4+(1-t)*(1-t)*50);
+      let sub='';
+      if(pv!=null&&pv!==v){const x=v-pv;sub+='<span class="dl num '+(x<0?'down':'up')+'">'+(x<0?'↓ ':'↑ ')+brl(Math.abs(x))+'</span>'}
+      if(mode==='conf'&&q.best!=null&&q.price!=null&&q.price<q.best)sub+='<span class="chip in">dentro −'+brl(q.best-q.price).replace('R$ ','R$')+'</span>';
+      if(mode==='conf'&&q.fake!=null)sub+='<span class="chip chg">lista mudou</span>';
+      if(mode==='conf'&&!q.conf)sub+='<span class="chip">não confirmado</span>';
+      if(mode==='auto'&&q.self!=null&&q.self<(q.price??Infinity))sub+='<span class="chip">autotransf.</span>';
+      const ageH=(lastAt-new Date(L.at).getTime())/36e5;
+      if(ageH>=1.5)sub+='<span class="age">há '+Math.round(ageH)+' h</span>';
+      const cls='cell'+(v===mn?' best':'')+(sel===k?' sel':'');
+      h+='<td style="background:color-mix(in oklab,var(--accent) '+pct+'%,var(--surface))"><button type="button" class="'+cls+'" data-k="'+k+'" aria-label="'+esc(desc(k)+': '+brl(v))+'"><span class="v num">'+brl(v)+'</span><span class="sub">'+(sub||'<span>'+esc((q.air||'').split(' e ')[0])+'</span>')+'</span></button></td>';
+    });
+    h+='</tr>';
+  });
+  $('grid').innerHTML=h+'</tbody>';
+  $('grid').querySelectorAll('.cell').forEach(b=>b.onclick=()=>select(b.dataset.k));
+}
+function select(k){sel=k;const p=parts(k);orig=p.o;trip=p.volta||'';save();renderControls();renderSide();renderGrid();renderDetail()}
+
+function renderDetail(){
+  const el=$('detail');
+  if(!sel||parts(sel).o!==orig||(parts(sel).volta||'')!==trip){const c=minFor(orig,trip,'conf');sel=c?c.k:null}
+  if(!sel){el.innerHTML='<header><h2>Detalhe</h2></header><div class="empty">Toque em uma data no quadro para ver o histórico dela.</div>';return}
+  const p=parts(sel),L=latestFor(sel),q=L&&L.q,rows=[];
+  if(q){
+    rows.push(['Preço confirmado',q.conf?brl(q.price):brl(q.price)+' (não confirmado)']);
+    if(!p.volta&&desl(p.o))rows.push(['Com deslocamento até '+CID[p.o],brl(q.price+desl(p.o))]);
+    rows.push(['Preço de fora (Melhor opção)',brl(q.best)]);
+    if(q.fake!=null)rows.push(['Lista mostrava, mas mudou',brl(q.fake)]);
+    rows.push(['Com autotransferência',q.self!=null&&q.self<(q.price??Infinity)?brl(q.self)+(q.selfAir?' · '+q.selfAir:''):'não ficou mais barato']);
+    rows.push([p.volta?'Ida: companhia':'Companhia',q.air||'—']);
+    rows.push([p.volta?'Ida: paradas':'Paradas',q.stops==null?'—':(q.stops===0?'direto':q.stops)]);
+    rows.push([p.volta?'Ida: horário':'Horário',q.times?q.times.replace('-',' → '):'—']);
+    rows.push([p.volta?'Ida: duração':'Duração',q.dur||'—']);
+    if(p.volta){rows.push(['Volta: companhia',q.vAir||'—']);rows.push(['Volta: horário',q.vTimes?q.vTimes.replace('-',' → '):'—']);rows.push(['Volta: duração',q.vDur||'—'])}
+    rows.push(['Vendido por',q.seller||'—']);
+    rows.push(['Lido em',tFmt(L.at)]);
+  }
+  el.innerHTML='<header><h2>'+esc(desc(sel))+'</h2><a class="btn ghost" href="'+gfUrl(p.o,p.d,p.ida,p.volta)+'" target="_blank" rel="noopener">Abrir no Google Voos</a></header>'+
+    (q?'<dl class="kv">'+rows.map(r=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join('')+'</dl>':'<div class="empty">Sem dados para esta busca ainda.</div>')+
+    '<div class="legend"><span><i style="background:var(--s1)"></i>Preço confirmado</span><span><i class="dash"></i>Preço de fora</span></div>'+
+    '<div class="chart" id="cellChart"></div>';
+  const pts=runs.map(r=>({t:new Date(r.at).getTime(),q:r.q&&r.q[sel]})).filter(x=>x.q&&!x.q.err);
+  lineChart($('cellChart'),[
+    {name:'De fora',color:css('--ink-3'),dash:true,pts:pts.filter(x=>x.q.best!=null).map(x=>({t:x.t,v:x.q.best}))},
+    {name:'Confirmado',color:css('--s1'),pts:pts.filter(x=>x.q.price!=null).map(x=>({t:x.t,v:x.q.price}))}
+  ],{height:190});
+}
+
+function renderTrend(){
+  $('trendLegend').innerHTML=ORIGS.map((o,i)=>'<span><i style="background:var('+OCOL[i%3]+')"></i>'+esc(CID[o])+(desl(o)?' (+ deslocamento)':'')+'</span>').join('');
+  const series=ORIGS.map((o,i)=>({name:CID[o],color:css(OCOL[i%3]),label:true,pts:runs.map(r=>{let m=null;for(const k in (r.q||{})){const p=parts(k),q=r.q[k];if(p.o!==o||p.volta||!q||q.err||!q.conf||q.price==null)continue;const v=q.price+desl(o);if(m==null||v<m)m=v}return m==null?null:{t:new Date(r.at).getTime(),v:m}}).filter(Boolean)}));
+  lineChart($('trend'),series,{height:220});
+}
+
+function renderLog(){
+  const t=$('log');
+  $('logCount').textContent=runs.length?('últimas '+Math.min(12,runs.length)+' de '+runs.length):'';
+  if(!runs.length){t.innerHTML='<tr><td><div class="empty">Nenhuma verificação ainda.</div></td></tr>';return}
+  const rows=runs.slice(-12).reverse().map(r=>{
+    let best=null;for(const k in (r.q||{})){const q=r.q[k];if(q.err||!q.conf||q.price==null||parts(k).volta)continue;if(!best||q.price<best.v)best={v:q.price,k}}
+    const n=r.n??Object.values(r.q||{}).filter(q=>!q.err).length,tot=r.total??Object.keys(r.q||{}).length;
+    const cls=r.status==='bloqueado'?'bad':r.status==='parcial'?'warn':'ok';
+    const bt=best?(brl(best.v)+' · '+parts(best.k).o+'–'+parts(best.k).d+' '+dParts(parts(best.k).ida).dm):'—';
+    return '<tr><td class="num">'+esc(tFmt(r.at))+'</td><td><span class="pill '+cls+'"><span class="dot"></span>'+esc(r.status||'ok')+'</span></td><td class="r num">'+n+'/'+tot+'</td><td class="r num">'+esc(bt)+'</td></tr>'+(r.note?'<tr><td colspan="4" class="small muted">'+esc(r.note)+'</td></tr>':'');
+  }).join('');
+  t.innerHTML='<thead><tr><th>Quando</th><th>Status</th><th class="r">Buscas</th><th class="r">Menor só ida da rodada</th></tr></thead><tbody>'+rows+'</tbody>';
+}
+
+function niceTicks(lo,hi,n){if(lo===hi){lo-=500;hi+=500}const span=hi-lo,step0=span/n,mag=Math.pow(10,Math.floor(Math.log10(step0))),err=step0/mag,step=(err>=7.5?10:err>=3.5?5:err>=1.5?2:1)*mag;const a=Math.floor(lo/step)*step,b=Math.ceil(hi/step)*step,t=[];for(let v=a;v<=b+1e-9;v+=step)t.push(Math.round(v));return t}
+function lineChart(box,series,opt){
+  const all=series.flatMap(s=>s.pts);
+  if(!all.length){box.innerHTML='<div class="empty">O gráfico aparece depois da primeira verificação.</div>';return}
+  const draw=()=>{
+    const W=Math.max(280,box.clientWidth||600),H=opt.height||200,labelR=series.some(s=>s.label)?70:12,m={l:54,r:labelR,t:12,b:26};
+    const ts=[...new Set(all.map(p=>p.t))].sort((a,b)=>a-b);
+    let t0=ts[0],t1=ts[ts.length-1];if(t0===t1){t0-=36e5*3;t1+=36e5*3}
+    const yt=niceTicks(Math.min(...all.map(p=>p.v)),Math.max(...all.map(p=>p.v)),4);
+    const y0=yt[0],y1=yt[yt.length-1];
+    const X=t=>m.l+(t-t0)/(t1-t0)*(W-m.l-m.r),Y=v=>m.t+(1-(v-y0)/(y1-y0))*(H-m.t-m.b);
+    const grid=css('--grid'),axis=css('--axis'),ink2=css('--ink-2'),surf=css('--surface');
+    let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Histórico de preços">';
+    yt.forEach(v=>{s+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="'+grid+'" stroke-width="1"/><text x="'+(m.l-8)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="11" fill="'+ink2+'" font-family="IBM Plex Mono,monospace">'+(v/1000).toLocaleString('pt-BR',{maximumFractionDigits:1})+' mil</text>'});
+    s+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+(H-m.b)+'" y2="'+(H-m.b)+'" stroke="'+axis+'" stroke-width="1"/>';
+    const multiDay=(t1-t0)>36e5*30,nT=Math.max(2,Math.min(6,Math.floor((W-m.l-m.r)/90)));
+    for(let i=0;i<nT;i++){const t=t0+(t1-t0)*i/(nT-1);const d=new Date(t);const lab=multiDay?d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',timeZone:TZ}):d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:TZ});s+='<text x="'+X(t)+'" y="'+(H-8)+'" text-anchor="'+(i===0?'start':i===nT-1?'end':'middle')+'" font-size="11" fill="'+ink2+'" font-family="IBM Plex Mono,monospace">'+lab+'</text>'}
+    series.forEach(se=>{
+      if(!se.pts.length)return;
+      const p=se.pts.slice().sort((a,b)=>a.t-b.t);
+      if(p.length>1)s+='<path d="'+p.map((q,i)=>(i?'L':'M')+X(q.t).toFixed(1)+' '+Y(q.v).toFixed(1)).join(' ')+'" fill="none" stroke="'+se.color+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"'+(se.dash?' stroke-dasharray="5 4"':'')+'/>';
+      const last=p[p.length-1];
+      s+='<circle cx="'+X(last.t)+'" cy="'+Y(last.v)+'" r="4.5" fill="'+se.color+'" stroke="'+surf+'" stroke-width="2"/>';
+      if(se.label)s+='<text x="'+(X(last.t)+8)+'" y="'+(Y(last.v)+4)+'" font-size="11.5" font-weight="600" fill="'+css('--ink')+'" font-family="IBM Plex Sans,sans-serif">'+esc(se.name)+'</text>';
+    });
+    s+='<line id="xh" x1="0" x2="0" y1="'+m.t+'" y2="'+(H-m.b)+'" stroke="'+axis+'" stroke-width="1" visibility="hidden"/>';
+    s+='<rect x="'+m.l+'" y="0" width="'+(W-m.l-m.r)+'" height="'+H+'" fill="transparent" style="cursor:crosshair"/></svg><div class="tip" hidden></div>';
+    box.innerHTML=s;
+    if(ts.length===1)box.insertAdjacentHTML('beforeend','<p class="small muted" style="margin:6px 0 0">Só uma verificação até agora; as linhas se formam a cada rodada.</p>');
+    const svg=box.querySelector('svg'),tip=box.querySelector('.tip'),xh=box.querySelector('#xh');
+    const move=e=>{
+      const r=svg.getBoundingClientRect(),x=(e.clientX-r.left)*(W/r.width);
+      let best=ts[0];ts.forEach(t=>{if(Math.abs(X(t)-x)<Math.abs(X(best)-x))best=t});
+      xh.setAttribute('x1',X(best));xh.setAttribute('x2',X(best));xh.setAttribute('visibility','visible');
+      const lines=series.map(se=>{const p=se.pts.find(q=>q.t===best);return p?'<div><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:'+se.color+';margin-right:6px"></span>'+esc(se.name)+': <b>'+brl(p.v)+'</b></div>':''}).join('');
+      tip.innerHTML='<div style="opacity:.75;margin-bottom:2px">'+esc(tFmt(new Date(best).toISOString()))+'</div>'+lines;
+      tip.hidden=false;
+      const px=X(best)/W*r.width;tip.style.left=Math.min(Math.max(px,80),r.width-80)+'px';tip.style.top='8px';
+    };
+    svg.addEventListener('pointermove',move);svg.addEventListener('pointerdown',move);
+    svg.addEventListener('pointerleave',()=>{tip.hidden=true;xh.setAttribute('visibility','hidden')});
+  };
+  draw();
+  if(!box._ro&&window.ResizeObserver){let w=box.clientWidth;box._ro=new ResizeObserver(()=>{if(Math.abs(box.clientWidth-w)>8){w=box.clientWidth;box._redraw&&box._redraw()}});box._ro.observe(box)}
+  box._redraw=draw;
+}
+
+function renderAll(){renderRoute();renderMeta();renderBoard();renderControls();renderSide();renderGrid();renderDetail();renderTrend();renderLog()}
+
+document.querySelectorAll('#segMode button').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;save();renderControls();renderSide();renderGrid()});
+try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{renderDetail();renderTrend()})}catch(e){}
+
+runs=(window.__RUNS__||[]).filter(r=>r&&r.at).map(r=>Object.assign({},r,{q:Object.fromEntries(Object.entries(r.q||{}).map(([k,v])=>[migr(k),v]))})).sort((a,b)=>a.at<b.at?-1:1);
+if(trip&&orig!==CFG.origem_principal)orig=CFG.origem_principal;
+renderAll();
+})();
+</script>
+
+</body>
+</html>
