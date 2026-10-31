@@ -1,0 +1,47 @@
+name: Monitor de passagens
+
+on:
+  schedule:
+    - cron: "17 */2 * * *"   # a cada 2 horas (horário UTC)
+  workflow_dispatch:           # botão "Run workflow" para rodar na hora
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  rodada:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar Playwright e Chromium
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Rodar as buscas
+        env:
+          NTFY_TOPICO: ${{ secrets.NTFY_TOPICO }}
+          TZ: America/Fortaleza
+        run: |
+          mkdir -p docs
+          python passagens.py
+
+      - name: Salvar resultados no repositório
+        if: always()
+        run: |
+          git config user.name "monitor-passagens"
+          git config user.email "monitor-passagens@users.noreply.github.com"
+          for f in historico.json historico.csv estado.json log.txt docs/index.html; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "Rodada $(date +'%d/%m %H:%M')"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
