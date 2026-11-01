@@ -18,7 +18,7 @@
   --line:#d8dde5; --grid:#e3e7ec; --axis:#c3c9d2;
   --accent:#f2b200; --accent-ink:#7a5300; --on-accent:#1b1500;
   --good:#006300; --bad:#b42318; --warn:#8a5a00;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
   --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
   --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -28,13 +28,13 @@
   --line:#283446; --grid:#223043; --axis:#36445a;
   --accent:#ffc72c; --accent-ink:#ffd35c; --on-accent:#1b1500;
   --good:#3fbf5a; --bad:#ff7a6e; --warn:#ffc72c;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; color-scheme:dark}}
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0e151f; --surface:#151e2b; --surface-2:#1a2534; --ink:#e8edf3; --ink-2:#a9b4c2; --ink-3:#8390a1;
   --line:#283446; --grid:#223043; --axis:#36445a;
   --accent:#ffc72c; --accent-ink:#ffd35c; --on-accent:#1b1500;
   --good:#3fbf5a; --bad:#ff7a6e; --warn:#ffc72c;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; color-scheme:dark}
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
@@ -204,9 +204,9 @@ table.log{width:100%;border-collapse:collapse;font-size:13.5px}
 <script>
 (function(){
 const CFG=Object.assign({origem_principal:'NAT',origens:['NAT'],destinos:['MCO','MIA','TPA'],datas:['2026-12-26','2026-12-27','2026-12-28','2026-12-29','2026-12-30','2026-12-31','2027-01-01'],volta:[],deslocamento:{},preco_alvo:null,preco_alvo_ida_volta:null},window.__CFG__||{});
-const CID=Object.assign({NAT:'Natal',REC:'Recife',FOR:'Fortaleza',MCO:'Orlando',MIA:'Miami',TPA:'Tampa',FLL:'Fort Lauderdale'},CFG.cidades||{});
+const CID=Object.assign({NAT:'Natal',JPA:'João Pessoa',REC:'Recife',FOR:'Fortaleza',MCO:'Orlando',MIA:'Miami',TPA:'Tampa',FLL:'Fort Lauderdale'},CFG.cidades||{});
 const ORIGS=CFG.origens, DESTS=CFG.destinos, DATES=CFG.datas, VOLTAS=(CFG.volta||[]).slice().sort();
-const OCOL=['--s1','--s2','--s3'];
+const OCOL=['--s1','--s2','--s3','--s4'];
 const TZ='America/Fortaleza';
 const HINTS={
   conf:'Valor da tela final de reserva do voo regular mais barato. O selo verde mostra quando saiu mais barato do que o preço de fora.',
@@ -365,8 +365,8 @@ function renderDetail(){
 }
 
 function renderTrend(){
-  $('trendLegend').innerHTML=ORIGS.map((o,i)=>'<span><i style="background:var('+OCOL[i%3]+')"></i>'+esc(CID[o])+(desl(o)?' (+ deslocamento)':'')+'</span>').join('');
-  const series=ORIGS.map((o,i)=>({name:CID[o],color:css(OCOL[i%3]),label:true,pts:runs.map(r=>{let m=null;for(const k in (r.q||{})){const p=parts(k),q=r.q[k];if(p.o!==o||p.volta||!q||q.err||!q.conf||q.price==null)continue;const v=q.price+desl(o);if(m==null||v<m)m=v}return m==null?null:{t:new Date(r.at).getTime(),v:m}}).filter(Boolean)}));
+  $('trendLegend').innerHTML=ORIGS.map((o,i)=>'<span><i style="background:var('+OCOL[i%4]+')"></i>'+esc(CID[o])+(desl(o)?' (+ deslocamento)':'')+'</span>').join('');
+  const series=ORIGS.map((o,i)=>({name:CID[o],color:css(OCOL[i%4]),label:true,pts:runs.map(r=>{let m=null;for(const k in (r.q||{})){const p=parts(k),q=r.q[k];if(p.o!==o||p.volta||!q||q.err||!q.conf||q.price==null)continue;const v=q.price+desl(o);if(m==null||v<m)m=v}return m==null?null:{t:new Date(r.at).getTime(),v:m}}).filter(Boolean)}));
   lineChart($('trend'),series,{height:220});
 }
 

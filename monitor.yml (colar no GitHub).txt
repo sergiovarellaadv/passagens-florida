@@ -1,0 +1,68 @@
+name: Monitor de passagens
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # confere toda hora; só roda se a última rodada tiver mais de 1h45
+    - cron: "47 * * * *"   # segunda chance, caso o GitHub pule o horário acima
+  workflow_dispatch:         # botão "Run workflow" para rodar na hora
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  rodada:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ver se já está na hora
+        id: hora
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, datetime as dt, os
+          if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
+              print("rodar=true"); raise SystemExit
+          try:
+              runs = json.load(open("historico.json", encoding="utf-8"))
+              ultima = max(dt.datetime.fromisoformat(r["at"]) for r in runs)
+              minutos = (dt.datetime.now(dt.timezone.utc) - ultima).total_seconds() / 60
+          except Exception:
+              minutos = 9999
+          print("rodar=" + ("true" if minutos >= 105 else "false"))
+          PY
+          cat "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-python@v5
+        if: steps.hora.outputs.rodar == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Instalar Playwright e Chromium
+        if: steps.hora.outputs.rodar == 'true'
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Rodar as buscas
+        if: steps.hora.outputs.rodar == 'true'
+        env:
+          NTFY_TOPICO: ${{ secrets.NTFY_TOPICO }}
+          TZ: America/Fortaleza
+        run: |
+          mkdir -p docs
+          python passagens.py
+
+      - name: Salvar resultados no repositório
+        if: always() && steps.hora.outputs.rodar == 'true'
+        run: |
+          git config user.name "monitor-passagens"
+          git config user.email "monitor-passagens@users.noreply.github.com"
+          for f in historico.json historico.csv estado.json log.txt docs/index.html; do git add "$f" 2>/dev/null || true; done
+          git diff --cached --quiet && exit 0
+          git commit -m "Rodada $(date +'%d/%m %H:%M')"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done

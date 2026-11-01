@@ -16,6 +16,7 @@ Uso:
                                  resolver uma verificação do Google)
   python passagens.py --painel   só regera o painel.html
 """
+import asyncio
 import csv
 import datetime as dt
 import json
@@ -41,17 +42,18 @@ LOG = PASTA / "log.txt"
 TRAVA = PASTA / ".rodando"
 PERFIL = PASTA / "perfil-chrome"
 
-CIDADES = {"NAT": "Natal", "REC": "Recife", "FOR": "Fortaleza", "MCO": "Orlando", "MIA": "Miami",
+CIDADES = {"NAT": "Natal", "REC": "Recife", "FOR": "Fortaleza", "JPA": "João Pessoa", "MCO": "Orlando", "MIA": "Miami",
            "TPA": "Tampa", "FLL": "Fort Lauderdale"}
 PADRAO = {
     "origem_principal": "NAT",
-    "origens": ["NAT", "REC", "FOR"],
+    "origens": ["NAT", "JPA", "REC", "FOR"],
     "destinos": ["MCO", "MIA", "TPA", "FLL"],
     "datas": ["2026-12-26", "2026-12-27", "2026-12-28", "2026-12-29",
               "2026-12-30", "2026-12-31", "2027-01-01"],
     "volta": [],
-    "extras_por_rodada": 14,
-    "deslocamento": {"REC": 0, "FOR": 0},
+    "extras_por_rodada": 28,
+    "buscas_simultaneas": 4,
+    "deslocamento": {"JPA": 0, "REC": 0, "FOR": 0},
     "preco_alvo": 3500,
     "preco_alvo_ida_volta": None,
     "queda_minima_aviso": 100,
@@ -221,20 +223,68 @@ def url_busca(origem, destino, ida, volta=None):
             "&hl=pt-BR&curr=BRL&gl=BR")
 
 
-def buscar(page, js, chave):
+ARGS_RAPIDO = ["--disable-background-timer-throttling", "--disable-renderer-backgrounding",
+               "--disable-backgrounding-occluded-windows"]
+BLOQUEAR = ("image", "media", "font")
+
+
+async def abrir_contexto_async(pw, visivel):
+    PERFIL.mkdir(exist_ok=True)
+    base = dict(user_data_dir=str(PERFIL), headless=not visivel, locale="pt-BR",
+                timezone_id="America/Fortaleza", viewport={"width": 1280, "height": 900},
+                args=["--disable-blink-features=AutomationControlled", "--lang=pt-BR"] + ARGS_RAPIDO)
+
+    async def lancar(**extra):
+        if os.environ.get("CI"):
+            return await pw.chromium.launch_persistent_context(**base, **extra)
+        try:
+            return await pw.chromium.launch_persistent_context(channel="chrome", **base, **extra)
+        except Exception:
+            log("Chrome não encontrado pelo Playwright; usando o Chromium do Playwright.")
+            return await pw.chromium.launch_persistent_context(**base, **extra)
+
+    ctx = await lancar()
+    if not visivel:  # tira o "HeadlessChrome" do user agent
+        pg = ctx.pages[0] if ctx.pages else await ctx.new_page()
+        ua = await pg.evaluate("navigator.userAgent")
+        if "Headless" in ua:
+            await ctx.close()
+            ctx = await lancar(user_agent=ua.replace("HeadlessChrome", "Chrome"))
+
+    # não baixa imagens, vídeos e fontes: a página carrega mais rápido
+    async def filtro(route):
+        if route.request.resource_type in BLOQUEAR:
+            await route.abort()
+        else:
+            await route.continue_()
+    await ctx.route("**/*", filtro)
+    return ctx
+
+
+async def recusar_cookies_async(page):
+    try:
+        botao = page.get_by_role("button", name="Rejeitar tudo")
+        if "consent." in page.url or await botao.count():
+            await botao.first.click(timeout=5000)
+            await page.wait_for_timeout(2500)
+    except Exception:
+        pass
+
+
+async def buscar_async(page, js, chave):
     o_, d_, ida, volta = partes(chave)
     url = url_busca(o_, d_, ida, volta)
     for tentativa in (1, 2):
         try:
-            page.goto(url, wait_until="domcontentloaded", timeout=60000)
-            recusar_cookies(page)
+            await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            await recusar_cookies_async(page)
             if "consent." in page.url:
-                page.goto(url, wait_until="domcontentloaded", timeout=60000)
-            o = json.loads(page.evaluate(js, bool(volta)))
+                await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            o = json.loads(await page.evaluate(js, bool(volta)))
             o["k"] = chave
             if o.get("err") == "BLOQUEIO":
                 texto = (o.get("snip") or "").lower()
-                if any(p in texto for p in ("captcha", "tráfego incomum", "unusual traffic", "robô", "robot")) \
+                if any(t in texto for t in ("captcha", "tráfego incomum", "unusual traffic", "robô", "robot")) \
                         or "/sorry/" in page.url:
                     return o
                 if tentativa == 1:
@@ -243,8 +293,43 @@ def buscar(page, js, chave):
             return o
         except Exception as e:
             log(f"{chave}: erro na tentativa {tentativa}: {e.__class__.__name__}: {str(e)[:160]}")
-            time.sleep(5)
+            await asyncio.sleep(5)
     return {"k": chave, "err": "FALHA"}
+
+
+async def executar_buscas(chaves, cfg):
+    """Faz as buscas em várias abas ao mesmo tempo. Para tudo se o Google bloquear."""
+    from playwright.async_api import async_playwright
+    js = EXTRATOR.read_text(encoding="utf-8")
+    n = max(1, min(8, int(cfg.get("buscas_simultaneas") or 1)))
+    fila = list(chaves)
+    resultados = {}
+    parar = asyncio.Event()
+
+    async with async_playwright() as pw:
+        ctx = await abrir_contexto_async(pw, cfg.get("mostrar_navegador"))
+
+        async def trabalhador(idx):
+            await asyncio.sleep(idx * 3)  # começa as abas em momentos diferentes
+            page = await ctx.new_page()
+            while fila and not parar.is_set():
+                k = fila.pop(0)
+                o = await buscar_async(page, js, k)
+                resultados[k] = o
+                if o.get("err") == "BLOQUEIO":
+                    log("Verificação anti-robô do Google. Rodada interrompida.")
+                    parar.set()
+                    break
+                if o.get("err"):
+                    log(f"{k}: sem resultado")
+                else:
+                    log(f"{k}: {brl(o['fin']) if o.get('fin') else '—'} ({o.get('s')} s)")
+                await asyncio.sleep(random.uniform(1, 3))
+            await page.close()
+
+        await asyncio.gather(*(trabalhador(i) for i in range(n)))
+        await ctx.close()
+    return resultados
 
 
 # ---------------------------------------------------------------- o que buscar
@@ -388,26 +473,11 @@ def rodada(teste=False):
     inicio = agora()
     resultados = {}
     try:
-        from playwright.sync_api import sync_playwright
-        js = EXTRATOR.read_text(encoding="utf-8")
         log(f"Início da rodada ({len(chaves)} buscas: {len(nucleo)} principais + {len(extras)} extras"
-            + (f", bloco {est.get('rodizio', 0) % blocos + 1} de {blocos}" if blocos else "") + ")")
-        with sync_playwright() as pw:
-            ctx = abrir_contexto(pw, cfg.get("mostrar_navegador"))
-            page = ctx.pages[0] if ctx.pages else ctx.new_page()
-            for i, k in enumerate(chaves):
-                o = buscar(page, js, k)
-                resultados[k] = o
-                if o.get("err") == "BLOQUEIO":
-                    log("Verificação anti-robô do Google. Rodada interrompida.")
-                    break
-                if o.get("err"):
-                    log(f"{k}: sem resultado")
-                else:
-                    log(f"{k}: {brl(o['fin']) if o.get('fin') else '—'} ({o.get('s')} s)")
-                if i < len(chaves) - 1:
-                    time.sleep(random.uniform(4, 10))
-            ctx.close()
+            + (f", bloco {est.get('rodizio', 0) % blocos + 1} de {blocos}" if blocos else "")
+            + f", {cfg.get('buscas_simultaneas', 1)} ao mesmo tempo)")
+        resultados = asyncio.run(executar_buscas(chaves, cfg))
+        log(f"Buscas terminadas em {int((agora() - inicio).total_seconds() // 60)} min")
     except Exception:
         log("Erro geral:\n" + traceback.format_exc())
     finally:
