@@ -2,6 +2,7 @@
   "origem_principal": "NAT",
   "origens": [
     "NAT",
+    "JPA",
     "REC",
     "FOR"
   ],
@@ -21,8 +22,10 @@
     "2027-01-01"
   ],
   "volta": [],
-  "extras_por_rodada": 14,
+  "extras_por_rodada": 28,
+  "buscas_simultaneas": 4,
   "deslocamento": {
+    "JPA": 0,
     "REC": 0,
     "FOR": 0
   },
