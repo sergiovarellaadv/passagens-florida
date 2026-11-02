@@ -33,7 +33,7 @@ jobs:
               minutos = (dt.datetime.now(dt.timezone.utc) - ultima).total_seconds() / 60
           except Exception:
               minutos = 9999
-          print("rodar=" + ("true" if minutos >= 105 else "false"))
+          print("rodar=" + ("true" if minutos >= 150 else "false"))
           PY
           cat "$GITHUB_OUTPUT"
 
