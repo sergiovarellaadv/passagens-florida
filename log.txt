@@ -2290,3 +2290,62 @@ João Pessoa → Miami 26/12: R$ 5.743 -> R$ 5.589
 [05/11 00:07:00] Buscas terminadas em 6 min
 [05/11 00:07:00] Fim da rodada: ok, 56/56 buscas. Mais barato só ida: R$ 3.808 Fortaleza → Fort Lauderdale 28/12
 [05/11 00:07:00] AVISO: Queda de preço | Fortaleza → Fort Lauderdale 27/12: R$ 4.551 -> R$ 4.329
+[05/11 02:00:40] Início da rodada (56 buscas: 28 principais + 28 extras, bloco 1 de 3, 4 ao mesmo tempo)
+[05/11 02:01:32] NAT-MCO_2026-12-29: sem resultado
+[05/11 02:01:42] NAT-MCO_2026-12-26: R$ 4.338 (60 s)
+[05/11 02:01:44] NAT-MCO_2026-12-27: R$ 4.804 (60 s)
+[05/11 02:01:48] NAT-MCO_2026-12-28: R$ 4.804 (60 s)
+[05/11 02:02:14] NAT-MCO_2026-12-30: sem resultado
+[05/11 02:02:25] NAT-MCO_2026-12-31: sem resultado
+[05/11 02:02:28] NAT-MCO_2027-01-01: sem resultado
+[05/11 02:02:31] NAT-MIA_2026-12-26: sem resultado
+[05/11 02:02:58] NAT-MIA_2026-12-27: sem resultado
+[05/11 02:03:10] NAT-MIA_2026-12-28: sem resultado
+[05/11 02:03:12] NAT-MIA_2026-12-29: sem resultado
+[05/11 02:03:14] NAT-MIA_2026-12-30: sem resultado
+[05/11 02:03:43] NAT-MIA_2026-12-31: sem resultado
+[05/11 02:03:53] NAT-MIA_2027-01-01: sem resultado
+[05/11 02:03:56] NAT-TPA_2026-12-26: sem resultado
+[05/11 02:03:57] NAT-TPA_2026-12-27: sem resultado
+[05/11 02:04:37] NAT-TPA_2026-12-29: sem resultado
+[05/11 02:04:39] NAT-TPA_2026-12-30: sem resultado
+[05/11 02:04:42] NAT-TPA_2026-12-31: sem resultado
+[05/11 02:04:46] NAT-TPA_2026-12-28: R$ 4.352 (60 s)
+[05/11 02:05:22] NAT-TPA_2027-01-01: sem resultado
+[05/11 02:05:24] NAT-FLL_2026-12-26: sem resultado
+[05/11 02:05:49] NAT-FLL_2026-12-28: R$ 5.735 (60 s)
+[05/11 02:06:05] NAT-FLL_2026-12-29: sem resultado
+[05/11 02:06:06] NAT-FLL_2026-12-27: R$ 6.295 (60 s)
+[05/11 02:06:32] NAT-FLL_2026-12-31: sem resultado
+[05/11 02:06:48] NAT-FLL_2026-12-30: R$ 5.735 (60 s)
+[05/11 02:06:48] NAT-FLL_2027-01-01: sem resultado
+[05/11 02:06:50] JPA-MCO_2026-12-26: sem resultado
+[05/11 02:07:17] JPA-MCO_2026-12-27: sem resultado
+[05/11 02:07:32] JPA-MCO_2026-12-28: sem resultado
+[05/11 02:07:32] JPA-MCO_2026-12-29: sem resultado
+[05/11 02:07:33] JPA-MCO_2026-12-30: sem resultado
+[05/11 02:08:00] JPA-MCO_2026-12-31: sem resultado
+[05/11 02:08:15] JPA-MCO_2027-01-01: sem resultado
+[05/11 02:08:16] JPA-MIA_2026-12-26: sem resultado
+[05/11 02:08:16] JPA-MIA_2026-12-27: sem resultado
+[05/11 02:08:44] JPA-MIA_2026-12-28: sem resultado
+[05/11 02:08:59] JPA-MIA_2026-12-29: sem resultado
+[05/11 02:09:00] JPA-MIA_2026-12-30: sem resultado
+[05/11 02:09:00] JPA-MIA_2026-12-31: sem resultado
+[05/11 02:09:27] JPA-MIA_2027-01-01: sem resultado
+[05/11 02:09:43] JPA-TPA_2026-12-26: sem resultado
+[05/11 02:09:45] JPA-TPA_2026-12-27: sem resultado
+[05/11 02:09:45] JPA-TPA_2026-12-28: sem resultado
+[05/11 02:10:12] JPA-TPA_2026-12-29: sem resultado
+[05/11 02:10:26] JPA-TPA_2026-12-30: sem resultado
+[05/11 02:10:29] JPA-TPA_2026-12-31: sem resultado
+[05/11 02:10:29] JPA-TPA_2027-01-01: sem resultado
+[05/11 02:10:56] JPA-FLL_2026-12-26: sem resultado
+[05/11 02:11:10] JPA-FLL_2026-12-27: sem resultado
+[05/11 02:11:12] JPA-FLL_2026-12-28: sem resultado
+[05/11 02:11:13] JPA-FLL_2026-12-29: sem resultado
+[05/11 02:11:40] JPA-FLL_2026-12-30: sem resultado
+[05/11 02:11:55] JPA-FLL_2026-12-31: sem resultado
+[05/11 02:11:57] JPA-FLL_2027-01-01: sem resultado
+[05/11 02:12:00] Buscas terminadas em 11 min
+[05/11 02:12:00] Fim da rodada: parcial, 1/56 buscas.
