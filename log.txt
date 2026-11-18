@@ -11978,3 +11978,12 @@ Natal → Miami 30/12: R$ 4.004 -> R$ 3.599
 [18/11 16:07:18] JPA-FLL_2027-01-01: R$ 7.931 (13 s)
 [18/11 16:07:21] Buscas terminadas em 6 min
 [18/11 16:07:21] Fim da rodada: ok, 56/56 buscas. Mais barato só ida: R$ 4.086 João Pessoa → Miami 31/12
+[18/11 18:07:48] Início da rodada (56 buscas: 28 principais + 28 extras, bloco 2 de 3, 4 ao mesmo tempo)
+[18/11 18:08:13] NAT-MCO_2026-12-28: R$ 7.619 (15 s)
+[18/11 18:08:19] Verificação anti-robô do Google. Rodada interrompida.
+[18/11 18:08:43] Verificação anti-robô do Google. Rodada interrompida.
+[18/11 18:08:56] NAT-MCO_2026-12-29: R$ 5.502 (55 s)
+[18/11 18:09:21] NAT-MCO_2026-12-27: R$ 10.745 (86 s)
+[18/11 18:09:22] Buscas terminadas em 1 min
+[18/11 18:09:22] Fim da rodada: bloqueado, 3/56 buscas. Mais barato só ida: R$ 5.502 Natal → Orlando 29/12
+[18/11 18:09:22] AVISO: Google pediu verificação | Rode abrir_navegador.bat, resolva a verificação na janela e feche-a. As próximas rodadas voltam ao normal.
