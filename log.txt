@@ -12758,3 +12758,62 @@ Recife → Fort Lauderdale 30/12: R$ 4.416 -> R$ 4.090
 [19/11 20:18:50] FOR-FLL_2027-01-01: R$ 6.384 (60 s)
 [19/11 20:18:52] Buscas terminadas em 14 min
 [19/11 20:18:52] Fim da rodada: parcial, 30/56 buscas. Mais barato só ida: R$ 4.368 Fortaleza → Orlando 30/12
+[19/11 22:05:38] Início da rodada (56 buscas: 28 principais + 28 extras, bloco 1 de 3, 4 ao mesmo tempo)
+[19/11 22:06:24] NAT-MCO_2026-12-26: sem resultado
+[19/11 22:06:27] NAT-MCO_2026-12-27: sem resultado
+[19/11 22:06:30] NAT-MCO_2026-12-28: sem resultado
+[19/11 22:06:33] NAT-MCO_2026-12-29: sem resultado
+[19/11 22:07:08] NAT-MCO_2026-12-30: sem resultado
+[19/11 22:07:11] NAT-MCO_2026-12-31: sem resultado
+[19/11 22:07:13] NAT-MCO_2027-01-01: sem resultado
+[19/11 22:07:17] NAT-MIA_2026-12-26: sem resultado
+[19/11 22:07:53] NAT-MIA_2026-12-27: sem resultado
+[19/11 22:07:55] NAT-MIA_2026-12-28: sem resultado
+[19/11 22:07:56] NAT-MIA_2026-12-29: sem resultado
+[19/11 22:08:02] NAT-MIA_2026-12-30: sem resultado
+[19/11 22:08:37] NAT-MIA_2026-12-31: sem resultado
+[19/11 22:08:39] NAT-MIA_2027-01-01: sem resultado
+[19/11 22:08:39] NAT-TPA_2026-12-26: sem resultado
+[19/11 22:08:45] NAT-TPA_2026-12-27: sem resultado
+[19/11 22:09:20] NAT-TPA_2026-12-28: sem resultado
+[19/11 22:09:21] NAT-TPA_2026-12-29: sem resultado
+[19/11 22:09:22] NAT-TPA_2026-12-30: sem resultado
+[19/11 22:09:30] NAT-TPA_2026-12-31: sem resultado
+[19/11 22:10:04] NAT-TPA_2027-01-01: sem resultado
+[19/11 22:10:05] NAT-FLL_2026-12-26: sem resultado
+[19/11 22:10:06] NAT-FLL_2026-12-27: sem resultado
+[19/11 22:10:14] NAT-FLL_2026-12-28: sem resultado
+[19/11 22:10:47] NAT-FLL_2026-12-29: sem resultado
+[19/11 22:10:48] NAT-FLL_2026-12-30: sem resultado
+[19/11 22:10:49] NAT-FLL_2026-12-31: sem resultado
+[19/11 22:10:58] NAT-FLL_2027-01-01: sem resultado
+[19/11 22:11:30] JPA-MCO_2026-12-26: sem resultado
+[19/11 22:11:31] JPA-MCO_2026-12-27: sem resultado
+[19/11 22:11:32] JPA-MCO_2026-12-28: sem resultado
+[19/11 22:11:41] JPA-MCO_2026-12-29: sem resultado
+[19/11 22:12:13] JPA-MCO_2026-12-30: sem resultado
+[19/11 22:12:15] JPA-MCO_2026-12-31: sem resultado
+[19/11 22:12:16] JPA-MCO_2027-01-01: sem resultado
+[19/11 22:12:25] JPA-MIA_2026-12-26: sem resultado
+[19/11 22:12:59] JPA-MIA_2026-12-28: sem resultado
+[19/11 22:13:06] JPA-MIA_2026-12-29: R$ 5.532 (47 s)
+[19/11 22:13:09] JPA-MIA_2026-12-30: sem resultado
+[19/11 22:14:08] JPA-MIA_2027-01-01: R$ 6.607 (60 s)
+[19/11 22:14:09] JPA-MIA_2026-12-27: R$ 5.245 (92 s)
+[19/11 22:14:12] JPA-TPA_2026-12-26: R$ 14.943 (61 s)
+[19/11 22:14:43] JPA-MIA_2026-12-31: R$ 4.103 (101 s)
+[19/11 22:15:14] JPA-TPA_2026-12-27: R$ 6.219 (63 s)
+[19/11 22:15:20] JPA-TPA_2026-12-29: R$ 6.219 (44 s)
+[19/11 22:15:33] JPA-TPA_2026-12-28: R$ 7.055 (81 s)
+[19/11 22:15:47] JPA-TPA_2026-12-30: R$ 4.824 (63 s)
+[19/11 22:15:51] JPA-FLL_2026-12-26: R$ 4.253 (14 s)
+[19/11 22:16:09] JPA-TPA_2026-12-31: R$ 7.320 (53 s)
+[19/11 22:16:12] JPA-FLL_2026-12-28: R$ 4.253 (19 s)
+[19/11 22:16:14] JPA-TPA_2027-01-01: R$ 8.592 (51 s)
+[19/11 22:16:28] JPA-FLL_2026-12-30: R$ 4.844 (13 s)
+[19/11 22:16:32] JPA-FLL_2026-12-31: R$ 5.972 (14 s)
+[19/11 22:16:36] JPA-FLL_2026-12-27: R$ 4.253 (46 s)
+[19/11 22:16:39] JPA-FLL_2026-12-29: R$ 4.253 (29 s)
+[19/11 22:16:44] JPA-FLL_2027-01-01: R$ 7.965 (13 s)
+[19/11 22:16:46] Buscas terminadas em 11 min
+[19/11 22:16:46] Fim da rodada: parcial, 14/56 buscas. Mais barato só ida: R$ 4.253 João Pessoa → Fort Lauderdale 26/12
