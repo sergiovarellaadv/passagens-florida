@@ -17734,3 +17734,62 @@ Recife → Fort Lauderdale 30/12: R$ 4.416 -> R$ 4.090
 [26/11 22:14:40] JPA-FLL_2026-12-29: R$ 5.268 (46 s)
 [26/11 22:14:42] Buscas terminadas em 13 min
 [26/11 22:14:42] Fim da rodada: parcial, 23/56 buscas. Mais barato só ida: R$ 4.153 João Pessoa → Miami 31/12
+[27/11 00:00:34] Início da rodada (56 buscas: 28 principais + 28 extras, bloco 2 de 3, 4 ao mesmo tempo)
+[27/11 00:01:14] NAT-MCO_2026-12-27: R$ 4.947 (15 s)
+[27/11 00:01:19] NAT-MCO_2026-12-28: R$ 4.889 (17 s)
+[27/11 00:01:20] NAT-MCO_2026-12-29: R$ 4.395 (15 s)
+[27/11 00:01:35] NAT-MCO_2026-12-26: R$ 7.745 (60 s)
+[27/11 00:01:59] NAT-MCO_2026-12-31: R$ 4.395 (18 s)
+[27/11 00:02:02] NAT-MCO_2027-01-01: R$ 6.078 (41 s)
+[27/11 00:02:18] NAT-MCO_2026-12-30: R$ 6.468 (61 s)
+[27/11 00:02:20] NAT-MIA_2026-12-27: R$ 4.857 (17 s)
+[27/11 00:02:37] NAT-MIA_2026-12-26: R$ 4.971 (60 s)
+[27/11 00:03:01] NAT-MIA_2026-12-29: sem resultado
+[27/11 00:03:04] NAT-MIA_2026-12-28: R$ 5.027 (60 s)
+[27/11 00:03:21] NAT-MIA_2026-12-31: sem resultado
+[27/11 00:03:23] NAT-MIA_2026-12-30: R$ 4.676 (60 s)
+[27/11 00:03:44] NAT-MIA_2027-01-01: sem resultado
+[27/11 00:03:48] NAT-TPA_2026-12-26: sem resultado
+[27/11 00:04:06] NAT-TPA_2026-12-28: sem resultado
+[27/11 00:04:26] NAT-TPA_2026-12-29: R$ 4.559 (39 s)
+[27/11 00:04:49] NAT-TPA_2026-12-31: R$ 4.309 (19 s)
+[27/11 00:05:22] NAT-TPA_2026-12-30: R$ 3.874 (92 s)
+[27/11 00:05:24] NAT-TPA_2026-12-27: R$ 3.874 (100 s)
+[27/11 00:05:28] NAT-TPA_2027-01-01: R$ 4.564 (60 s)
+[27/11 00:05:31] NAT-FLL_2026-12-26: sem resultado
+[27/11 00:06:05] NAT-FLL_2026-12-27: sem resultado
+[27/11 00:06:51] NAT-FLL_2026-12-29: R$ 5.199 (60 s)
+[27/11 00:06:54] NAT-FLL_2026-12-30: R$ 5.957 (60 s)
+[27/11 00:06:55] NAT-FLL_2026-12-31: R$ 5.222 (47 s)
+[27/11 00:06:59] NAT-FLL_2026-12-28: R$ 5.199 (92 s)
+[27/11 00:07:34] NAT-FLL_2027-01-01: sem resultado
+[27/11 00:07:37] REC-MCO_2026-12-26: sem resultado
+[27/11 00:07:59] REC-MCO_2026-12-27: R$ 5.821 (60 s)
+[27/11 00:08:03] REC-MCO_2026-12-28: R$ 4.281 (60 s)
+[27/11 00:08:19] REC-MCO_2026-12-29: sem resultado
+[27/11 00:08:21] REC-MCO_2026-12-30: sem resultado
+[27/11 00:08:41] REC-MCO_2026-12-31: sem resultado
+[27/11 00:09:02] REC-MIA_2026-12-26: sem resultado
+[27/11 00:09:05] REC-MIA_2026-12-27: sem resultado
+[27/11 00:09:05] REC-MCO_2027-01-01: R$ 5.879 (60 s)
+[27/11 00:09:24] REC-MIA_2026-12-28: sem resultado
+[27/11 00:09:45] REC-MIA_2026-12-29: sem resultado
+[27/11 00:09:49] REC-MIA_2026-12-30: sem resultado
+[27/11 00:09:49] REC-MIA_2026-12-31: sem resultado
+[27/11 00:10:32] REC-TPA_2026-12-27: sem resultado
+[27/11 00:10:34] REC-TPA_2026-12-28: sem resultado
+[27/11 00:10:46] REC-MIA_2027-01-01: R$ 6.380 (60 s)
+[27/11 00:10:48] REC-TPA_2026-12-26: R$ 4.833 (60 s)
+[27/11 00:11:16] REC-TPA_2026-12-29: sem resultado
+[27/11 00:11:17] REC-TPA_2026-12-30: sem resultado
+[27/11 00:11:29] REC-TPA_2026-12-31: sem resultado
+[27/11 00:11:32] REC-TPA_2027-01-01: sem resultado
+[27/11 00:12:00] REC-FLL_2026-12-26: sem resultado
+[27/11 00:12:01] REC-FLL_2026-12-27: sem resultado
+[27/11 00:12:13] REC-FLL_2026-12-28: sem resultado
+[27/11 00:12:15] REC-FLL_2026-12-29: sem resultado
+[27/11 00:12:44] REC-FLL_2026-12-30: sem resultado
+[27/11 00:12:45] REC-FLL_2026-12-31: sem resultado
+[27/11 00:12:57] REC-FLL_2027-01-01: sem resultado
+[27/11 00:12:59] Buscas terminadas em 12 min
+[27/11 00:12:59] Fim da rodada: parcial, 16/56 buscas. Mais barato só ida: R$ 4.309 Natal → Tampa 31/12
