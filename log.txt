@@ -18589,3 +18589,67 @@ Alvo: R$ 3.211 Fortaleza → Miami 31/12
 Fortaleza → Miami 01/01: R$ 4.689 -> R$ 3.937
 Fortaleza → Miami 31/12: R$ 3.609 -> R$ 3.211
 Natal → Tampa 31/12: R$ 4.309 -> R$ 4.162
+[28/11 04:00:45] Início da rodada (56 buscas: 28 principais + 28 extras, bloco 1 de 3, 4 ao mesmo tempo)
+[28/11 04:01:28] NAT-MCO_2026-12-26: sem resultado
+[28/11 04:01:30] NAT-MCO_2026-12-27: sem resultado
+[28/11 04:01:33] NAT-MCO_2026-12-28: sem resultado
+[28/11 04:01:36] NAT-MCO_2026-12-29: sem resultado
+[28/11 04:02:11] NAT-MCO_2026-12-30: sem resultado
+[28/11 04:02:13] NAT-MCO_2026-12-31: sem resultado
+[28/11 04:02:17] NAT-MCO_2027-01-01: sem resultado
+[28/11 04:02:20] NAT-MIA_2026-12-26: sem resultado
+[28/11 04:02:55] NAT-MIA_2026-12-27: sem resultado
+[28/11 04:02:57] NAT-MIA_2026-12-28: sem resultado
+[28/11 04:03:00] NAT-MIA_2026-12-29: sem resultado
+[28/11 04:03:03] NAT-MIA_2026-12-30: sem resultado
+[28/11 04:03:38] NAT-MIA_2026-12-31: sem resultado
+[28/11 04:03:41] NAT-MIA_2027-01-01: sem resultado
+[28/11 04:03:45] NAT-TPA_2026-12-26: sem resultado
+[28/11 04:03:47] NAT-TPA_2026-12-27: sem resultado
+[28/11 04:04:24] NAT-TPA_2026-12-29: sem resultado
+[28/11 04:04:27] NAT-TPA_2026-12-30: R$ 3.742 (40 s)
+[28/11 04:04:49] NAT-TPA_2026-12-31: R$ 4.162 (60 s)
+[28/11 04:05:01] NAT-TPA_2026-12-28: R$ 4.162 (60 s)
+[28/11 04:05:08] NAT-TPA_2027-01-01: sem resultado
+[28/11 04:05:11] NAT-FLL_2026-12-26: sem resultado
+[28/11 04:05:32] NAT-FLL_2026-12-27: sem resultado
+[28/11 04:05:45] NAT-FLL_2026-12-28: sem resultado
+[28/11 04:05:53] NAT-FLL_2026-12-29: sem resultado
+[28/11 04:05:56] NAT-FLL_2026-12-30: sem resultado
+[28/11 04:06:28] NAT-FLL_2027-01-01: sem resultado
+[28/11 04:06:37] JPA-MCO_2026-12-26: sem resultado
+[28/11 04:06:40] JPA-MCO_2026-12-27: sem resultado
+[28/11 04:06:57] NAT-FLL_2026-12-31: R$ 5.021 (60 s)
+[28/11 04:07:11] JPA-MCO_2026-12-28: sem resultado
+[28/11 04:07:20] JPA-MCO_2026-12-29: sem resultado
+[28/11 04:07:23] JPA-MCO_2026-12-30: sem resultado
+[28/11 04:07:40] JPA-MCO_2026-12-31: sem resultado
+[28/11 04:07:55] JPA-MCO_2027-01-01: sem resultado
+[28/11 04:08:05] JPA-MIA_2026-12-26: sem resultado
+[28/11 04:08:06] JPA-MIA_2026-12-27: sem resultado
+[28/11 04:08:22] JPA-MIA_2026-12-30: R$ 3.299 (15 s)
+[28/11 04:08:23] JPA-MIA_2026-12-28: sem resultado
+[28/11 04:08:39] JPA-MIA_2026-12-31: R$ 3.299 (30 s)
+[28/11 04:09:06] JPA-MIA_2027-01-01: sem resultado
+[28/11 04:09:08] JPA-TPA_2026-12-26: sem resultado
+[28/11 04:09:20] JPA-MIA_2026-12-29: R$ 4.364 (60 s)
+[28/11 04:09:24] JPA-TPA_2026-12-27: sem resultado
+[28/11 04:09:49] JPA-TPA_2026-12-28: sem resultado
+[28/11 04:09:52] JPA-TPA_2026-12-29: sem resultado
+[28/11 04:10:07] JPA-TPA_2026-12-31: sem resultado
+[28/11 04:10:33] JPA-TPA_2027-01-01: sem resultado
+[28/11 04:10:43] JPA-FLL_2026-12-27: R$ 4.063 (13 s)
+[28/11 04:10:46] JPA-FLL_2026-12-26: R$ 4.063 (51 s)
+[28/11 04:10:52] JPA-TPA_2026-12-30: R$ 5.943 (69 s)
+[28/11 04:11:23] JPA-FLL_2026-12-30: R$ 5.703 (14 s)
+[28/11 04:11:26] JPA-FLL_2026-12-29: sem resultado
+[28/11 04:11:35] JPA-FLL_2026-12-28: R$ 4.063 (60 s)
+[28/11 04:12:06] JPA-FLL_2027-01-01: sem resultado
+[28/11 04:12:15] JPA-FLL_2026-12-31: R$ 5.703 (60 s)
+[28/11 04:12:16] Buscas terminadas em 11 min
+[28/11 04:12:17] Fim da rodada: parcial, 10/56 buscas. Mais barato só ida: R$ 3.299 João Pessoa → Miami 30/12
+[28/11 04:12:17] AVISO: Preço-alvo atingido | Alvo: R$ 3.299 João Pessoa → Miami 30/12
+Alvo: R$ 3.299 João Pessoa → Miami 31/12
+João Pessoa → Miami 31/12: R$ 3.696 -> R$ 3.299
+João Pessoa → Fort Lauderdale 26/12: R$ 4.206 -> R$ 4.063
+João Pessoa → Fort Lauderdale 27/12: R$ 4.206 -> R$ 4.063
